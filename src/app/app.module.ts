@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { CamanComponent } from './caman/caman.component';
@@ -12,7 +12,6 @@ import { CamanComponent } from './caman/caman.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

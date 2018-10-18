@@ -1,18 +1,25 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, InjectionToken, Input, OnInit, Optional, ViewChild } from '@angular/core';
 
-declare var Caman: any;
+type Caman = Function;
+export const CAMAN_TOKEN = new InjectionToken<Caman>('caman');
+
+// declare var Caman: any;
 
 @Component({
   selector: 'app-caman',
   templateUrl: './caman.component.html',
-  styleUrls: ['./caman.component.css']
+  styleUrls: ['./caman.component.css'],
+  providers: [{
+    provide: CAMAN_TOKEN,
+    useValue: window['Caman'],
+  }]
 })
 export class CamanComponent implements OnInit, AfterViewInit {
   @Input() image: string;
 
   @ViewChild('canvas') canvasElementRef: ElementRef;
 
-  constructor() {
+  constructor(@Optional() @Inject(CAMAN_TOKEN) private caman) {
   }
 
   ngOnInit() {
@@ -20,7 +27,7 @@ export class CamanComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     console.log(this.canvasElementRef.nativeElement);
-    Caman(this.canvasElementRef.nativeElement, this.image, function () {
+    this.caman(this.canvasElementRef.nativeElement, this.image, function () {
       this.render();
     });
   }
